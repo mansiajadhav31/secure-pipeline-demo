@@ -17,3 +17,23 @@ function executeCommand(userInput) {
   const cmd = "ls " + userInput; // Command injection
   require('child_process').exec(cmd);
 }
+
+// Fixed: Use parameterized queries
+function getUserData(userId) {
+  const query = "SELECT * FROM users WHERE id = ?";
+  return db.execute(query, [userId]);
+}
+
+// Fixed: Use textContent instead of innerHTML
+function displayUsername(username) {
+  document.getElementById('user').textContent = username;
+}
+
+// Fixed: Use environment variables
+const API_KEY = process.env.API_KEY;
+
+// Fixed: Validate and sanitize input
+function executeCommand(userInput) {
+  const sanitized = userInput.replace(/[^a-zA-Z0-9]/g, '');
+  require('child_process').exec(`ls ${sanitized}`);
+}
